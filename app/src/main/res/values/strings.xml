@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Yatay</string>
+    <string name="web_client_id">318241678484-2ahvbsugcchm5m63phc5vk3n9opppav5.apps.googleusercontent.com</string>
+    <string name="home">Home</string>
+    <string name="map">map</string>
+    <string name="reserve">reserve</string>
+    <string name="gallery">gallery</string>
+    <string name="messages">messages</string>
+</resources>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "318241678484",
+    "project_id": "yatay-4acc5",
+    "storage_bucket": "yatay-4acc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318241678484:android:1c00ab45700601d11b4081",
+        "android_client_info": {
+          "package_name": "com.example.yatay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318241678484-8jc2sn3ohj9930b3112bm438t4gg5sc2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yatay",
+            "certificate_hash": "d039a4d6848272604f589de82d0af73c4a5a7024"
+          }
+        },
+        {
+          "client_id": "318241678484-2ahvbsugcchm5m63phc5vk3n9opppav5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbJh6kJNjJ1O3CrwQNhH3jvVm81zka2K0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318241678484-2ahvbsugcchm5m63phc5vk3n9opppav5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "318241678484",
+    "project_id": "yatay-4acc5",
+    "storage_bucket": "yatay-4acc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318241678484:android:1c00ab45700601d11b4081",
+        "android_client_info": {
+          "package_name": "com.example.yatay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbJh6kJNjJ1O3CrwQNhH3jvVm81zka2K0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

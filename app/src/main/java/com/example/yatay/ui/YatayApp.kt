@@ -44,7 +44,7 @@ fun YatayApp(
     Scaffold(
         modifier = Modifier,
         containerColor = Color.Transparent,
-        contentColor = Color.Transparent,//,MaterialTheme.colorScheme.onBackground,
+        contentColor = Color.Transparent,
         bottomBar = {
             BottomBar(
                 destinations = appState.bottomBarScreens,
@@ -80,9 +80,7 @@ fun YatayApp(
 
 
             if (appState.isOnline) {
-
                 val navController = appState.navController
-
 
              HomeNavGraph(appState = appState, navController = navController)
 
@@ -103,12 +101,8 @@ fun YatayNavRail(
     destinations: List<BottomBarScreen>,
     onNavigateToDestination: (BottomBarScreen) -> Unit,
     currentDestination: NavDestination?,
-    modifier: Modifier) {
-
-
-
-
-}
+    modifier: Modifier
+) {   }
 
 
 fun NavDestination?.isTopLevelDestinationInHierarchy(destination: BottomBarScreen) =

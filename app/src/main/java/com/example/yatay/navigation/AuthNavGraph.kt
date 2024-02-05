@@ -46,30 +46,14 @@ fun NavGraphBuilder.authNavGraph(
         route = Graph.AUTHENTICATION,
         startDestination = AuthScreen.Login.route
     ) {
-    /**    composable(route = AuthScreen.Login.route) {
 
-            SignInScreen(
-                state = SignInState(),
-                onSignInClick = {
-                    navController.popBackStack()
-                    navController.navigate(AuthScreen.Profile.route)
-                    //  navController.navigate(Graph.AUTHENTICATION)
-                   // val userData: UserData? = ,
-                  //  if (userData?.username != null) navController.navigate(Graph.HOME) else (" ")
-                    // navController.navigate(Graph.HOME)
-                },
-            )
-        }*/
-
-        //}
-        composable(route = AuthScreen.Login.route/**"sign_in"*/) {
+        composable(route = AuthScreen.Login.route) {
             val viewModel = viewModel<SignInViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
 
             LaunchedEffect(key1 = Unit) {
                 if (googleAuthUiClient.getSignedInUser() != null) {
-                    navController.navigate(AuthScreen.Profile.route/**"profile"*/)
-                    //navController.navigate("HOME-SCREEN")
+                    navController.navigate(AuthScreen.Profile.route)
                 }
 
             }
@@ -98,15 +82,9 @@ fun NavGraphBuilder.authNavGraph(
                         Toast.LENGTH_LONG
                     ).show()
 
-                    navController.navigate(AuthScreen.Profile.route/**"profile"*/)
+                    navController.navigate(AuthScreen.Profile.route)
                     viewModel.resetState()
-                /**    coroutineScope { //delay(5000)
-                        navController.navigate(Graph.HOME)
-                }*/
-
-
                 }
-
             }
 
             SignInScreen(
@@ -120,17 +98,11 @@ fun NavGraphBuilder.authNavGraph(
                             ).build()
                         )
                     }
-                    //navController.navigate(Graph.HOME)
                 }
             )
-
-
         }
 
-        composable(
-            route = AuthScreen.Profile.route
-            /**"profile"*/
-        ) {
+        composable(route = AuthScreen.Profile.route) {
             ProfileScreen(
                 userData = googleAuthUiClient.getSignedInUser(),
                 onSignOut = {
@@ -149,13 +121,10 @@ fun NavGraphBuilder.authNavGraph(
                 }
             )
         }
-
-
     }
 }
 
 sealed class AuthScreen(val route: String) {
     object Login : AuthScreen(route = "LOGIN")
-    object Profile : AuthScreen(route = "SIGN_UP")
-    //object Forgot : AuthScreen(route = "FORGOT")
+    object Profile : AuthScreen(route = "PROFILE")
 }

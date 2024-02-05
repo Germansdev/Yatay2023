@@ -1,7 +1,6 @@
 package com.example.yatay.navigation
 
 import android.content.Context
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -35,16 +34,6 @@ fun RootNavigationGraph(
             lifecycleScope = lifeCycleScope,
             googleAuthUiClient = googleAuthUiClient
             )
-    /**    composable(route = Graph.AUTHENTICATION){
-            ProfileScreen(userData = googleAuthUiClient.getSignedInUser(),
-                onSignOut = {lifeCycleScope.launch {
-                    googleAuthUiClient.signOut()
-                    navController.popBackStack()
-                }
-                }
-
-            )
-        }*/
 
         composable(route = Graph.HOME) {
             YatayApp(appState = rememberYatayAppState( windowSizeClass = windowSize ))

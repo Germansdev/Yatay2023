@@ -23,87 +23,12 @@ fun HomeNavGraph(
     navController: NavHostController,
 ) {
 
-
-   // val navController = appState.navController
     NavHost(
         navController = navController,
         route = Graph.HOME,
         startDestination = startDestination,
         modifier = modifier,
     ) {
-/**
-        composable("sign_in") {
-            val viewModel = viewModel<SignInViewModel>()
-            val state by viewModel.state.collectAsStateWithLifecycle()
-
-            LaunchedEffect(key1 = Unit) {
-                if (googleAuthUiClient.getSignedInUser() != null) {
-                    //navController.navigate("profile")
-                    navController.navigate("HOME-SCREEN")
-                }
-            }
-
-            val launcher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.StartIntentSenderForResult(),
-                onResult = { result ->
-                    if (result.resultCode == ComponentActivity.RESULT_OK) {
-                        lifecycleScope.launch {
-                            val signInResult = googleAuthUiClient.signInWithIntent(
-                                intent = result.data ?: return@launch
-                            )
-                            viewModel.onSignInResult(signInResult)
-                        }
-
-                    }
-                }
-            )
-
-            LaunchedEffect(key1 = state.isSignInSuccessful) {
-                if (state.isSignInSuccessful) {
-                    Toast.makeText(
-
-                        applicationContext,
-                        "Sign in successful",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    navController.navigate("profile")
-                    viewModel.resetState()
-                }
-            }
-
-            SignInScreen(
-                state = state,
-                onSignInClick = {
-                    lifecycleScope.launch {
-                        val signInIntentSender = googleAuthUiClient.signIn()
-                        launcher.launch(
-                            IntentSenderRequest.Builder(
-                                signInIntentSender ?: return@launch
-                            ).build()
-                        )
-                    }
-                }
-            )
-        }
-
-        composable("profile") {
-            ProfileScreen(
-                userData = googleAuthUiClient.getSignedInUser(),
-                onSignOut = {
-                    lifecycleScope.launch {
-                        googleAuthUiClient.signOut()
-                        Toast.makeText(
-                            applicationContext,
-                            "Signed out",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        navController.popBackStack()
-                    }
-                }
-            )
-        }*/
 
         composable(route = BottomBarScreen.Pantalla1.route) {
             ScreenHome()
@@ -120,7 +45,5 @@ fun HomeNavGraph(
         composable(route = BottomBarScreen.Pantalla5.route) {
             ScreenMessages()
         }
-
-
     }
 }

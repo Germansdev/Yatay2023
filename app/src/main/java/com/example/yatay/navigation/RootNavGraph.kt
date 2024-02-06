@@ -7,11 +7,18 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.yatay.presentation.profile.MiniProfile
 import com.example.yatay.presentation.sign_in.GoogleAuthUiClient
 import com.example.yatay.ui.YatayApp
 import com.example.yatay.ui.rememberYatayAppState
 
-
+object Graph {
+    const val ROOT = "root_graph"
+    const val AUTHENTICATION = "auth_graph"
+    const val HOME = "home_graph"
+    const val DETAILS = "details_graph"
+    const val MINI_PROFILE = "mini_profile"
+}
 @Composable
 fun RootNavigationGraph(
     navController: NavHostController,
@@ -38,12 +45,18 @@ fun RootNavigationGraph(
         composable(route = Graph.HOME) {
             YatayApp(appState = rememberYatayAppState( windowSizeClass = windowSize ))
         }
+     /**   composable(route=Graph.MINI_PROFILE){
+            MiniProfile(
+                googleAuthUiClient.getSignedInUser(),
+                onClick = {
+                   // navController.popBackStack()
+                  //  navController.navigate(Graph.MINI_PROFILE)
+                    navController.navigate(Graph.AUTHENTICATION)
+                }
+            )
+        }*/
+
+
     }
 }
 
-object Graph {
-    const val ROOT = "root_graph"
-    const val AUTHENTICATION = "auth_graph"
-    const val HOME = "home_graph"
-    const val DETAILS = "details_graph"
-}

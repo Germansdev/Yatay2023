@@ -61,6 +61,7 @@ dependencies {
 // Hilt
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation ("com.google.dagger:hilt-android:2.38.1")
+    implementation("androidx.compose.ui:ui-unit-android:1.6.0")
     kapt ("com.google.dagger:hilt-compiler:2.38.1")
 
 //Navigation:
@@ -83,13 +84,16 @@ dependencies {
 
     implementation("androidx.compose.material3:material3")
 
+//google service firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
 
     implementation ("com.google.firebase:firebase-auth-ktx:21.1.0")
     implementation("com.google.firebase:firebase-auth:21.1.0")
     implementation ("com.google.android.gms:play-services-auth:20.4.1")
 
-
+// mapas:
+    implementation("com.google.maps.android:maps-compose:2.11.2")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
 
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")

@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.yatay.presentation.profile.ProfileScreen
@@ -27,6 +28,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
+sealed class AuthScreen(val route: String) {
+    object Login : AuthScreen(route = "LOGIN")
+    object Profile : AuthScreen(route = "PROFILE")
+    object MiniProfile : AuthScreen(route = "MINIPROFILE")
+
+}
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController,
     applicationContext: Context,
@@ -34,13 +41,6 @@ fun NavGraphBuilder.authNavGraph(
 
     googleAuthUiClient: GoogleAuthUiClient,
       ) {
-
-/**    val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(
-            context = applicationContext,
-            oneTapClient = Identity.getSignInClient(applicationContext)
-        )
-    }*/
 
     navigation(
         route = Graph.AUTHENTICATION,
@@ -121,10 +121,11 @@ fun NavGraphBuilder.authNavGraph(
                 }
             )
         }
-    }
-}
 
-sealed class AuthScreen(val route: String) {
-    object Login : AuthScreen(route = "LOGIN")
-    object Profile : AuthScreen(route = "PROFILE")
+
+     // miniProfileGraph(navController=navController, googleAuthUiClient)
+
+
+    }
+
 }

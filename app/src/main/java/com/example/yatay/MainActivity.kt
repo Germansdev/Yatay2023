@@ -11,7 +11,6 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
-import com.example.yatay.maps.ScreenMap
 import com.example.yatay.navigation.RootNavigationGraph
 import com.example.yatay.presentation.sign_in.GoogleAuthUiClient
 import com.example.yatay.ui.theme.YatayTheme
@@ -30,6 +29,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             YatayTheme {
                 // A surface container using the 'background' color from the theme

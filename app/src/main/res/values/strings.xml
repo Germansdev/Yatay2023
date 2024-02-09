@@ -9,4 +9,19 @@
     <string name="bananos">bananos</string>
     <string name="roble">roble</string>
     <string name="naranjos">naranjos</string>
+    <string name="collage">collage</string>
+    <string name="diavistas">dia_vistas</string>
+    <string name="fuego_asado">fuego_asado</string>
+    <string name="duraznero">duraznero</string>
+    <string name="bananos_vista">bananos_vista</string>
+    <string name="muelle_d_a">muelle_día</string>
+    <string name="muelle_d_a_cartel">muelle_día_cartel</string>
+    <string name="muellenoche2">muellenoche2</string>
+    <string name="noche">noche</string>
+    <string name="parrald_a">parraldía</string>
+    <string name="parralnoche">parralnoche</string>
+    <string name="pinacolada">pinacolada</string>
+    <string name="roble2">roble2</string>
+    <string name="yataycartel">yataycartel</string>
+    <string name="date_picker">Date Picker</string>
 </resources>

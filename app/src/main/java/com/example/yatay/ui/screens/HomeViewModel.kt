@@ -9,17 +9,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
 
-class HomeViewModel (): ViewModel(){
+
+class HomeViewModel(
+
+) : ViewModel() {
     // Holds our currently selected home category
-    private val selectedCategory = MutableStateFlow(HomeCategory.Naranjos)
+    private val selectedCategory = MutableStateFlow(HomeCategory.Bananos)
+
     // Holds the currently available home categories
     private val categories = MutableStateFlow(HomeCategory.values().asList())
 
     // Holds our view state which the UI collects via [state]
     private val _state = MutableStateFlow(HomeViewState())
 
-    private val refreshing = MutableStateFlow(false)
+  //  private val refreshing = MutableStateFlow(false)
 
     val state: StateFlow<HomeViewState>
         get() = _state
@@ -31,13 +36,13 @@ class HomeViewModel (): ViewModel(){
             combine(
                 categories,
                 selectedCategory,
-                refreshing
-            ) { categories, selectedCategory, refreshing ->
+
+
+                ) { categories, selectedCategory ->
                 HomeViewState(
                     homeCategories = categories,
                     selectedHomeCategory = selectedCategory,
-                    refreshing = refreshing,
-                    errorMessage = null
+                    errorMessage = null,
                 )
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
@@ -47,23 +52,14 @@ class HomeViewModel (): ViewModel(){
             }
         }
 
-        refresh(force = false)
     }
 
-    private fun refresh(force: Boolean) {
-        viewModelScope.launch {
-            runCatching {
-                refreshing.value = true
-            }
-            // TODO: look at result of runCatching and show any errors
-
-            refreshing.value = false
-        }
+    fun Double.formatPrice(): String {
+        return NumberFormat.getCurrencyInstance().format(this)
     }
-
     fun onHomeCategorySelected(category: HomeCategory) {
         selectedCategory.value = category
     }
+    }
 
 
-}

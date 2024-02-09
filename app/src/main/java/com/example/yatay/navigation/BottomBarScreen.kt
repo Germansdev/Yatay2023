@@ -54,9 +54,24 @@ sealed class BottomBarScreen (
         unselectedIcon = Icon.ImageVectorIcon(YatayIcons.Messages),
         selectedIcon = Icon.ImageVectorIcon(YatayIcons.Messages),
     )
+}
 
+
+/**
+ * Interface to describe the navigation destinations for the app when
+ * details screen, search screen, genre selected not played & played screen
+ */
+interface NavigationDestination {
+    /** Unique name to define the path for a composable*/
+    val route: String
+
+    /** String resource id to that contains title to be displayed for the screen.
+     */
+    val titleRes: Int
 
 }
+
+
 
 object YatayIcons {
     val Home = Icons.Outlined.Home
@@ -65,10 +80,6 @@ object YatayIcons {
     val Reserve = Icons.Outlined.AddShoppingCart
     val Gallery = Icons.Outlined.PhotoAlbum
     val Messages = Icons.Outlined.Message
-
-
-
-
 }
 
 sealed class Icon {

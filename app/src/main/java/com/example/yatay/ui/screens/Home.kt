@@ -1,6 +1,5 @@
 package com.example.yatay.ui.screens
 
-import android.content.ContentValues
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -14,11 +13,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Cabin
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -28,6 +29,9 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -38,85 +42,64 @@ import com.example.yatay.R
 import com.example.yatay.model.HomeCategory
 
 @Composable
-fun ScreenHome (
+fun ScreenHome(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-    ){
+    viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+) {
+       val viewState by viewModel.state.collectAsStateWithLifecycle()
 
-    val viewState by viewModel.state.collectAsStateWithLifecycle()
 
-    Surface(Modifier.fillMaxSize()
+    Surface(
+        Modifier
+            .fillMaxSize()
+            .background(Color.White)
         //.background(Color.White)
     ) {
-        HomeContent(
-            isRefreshing = viewState.refreshing,
-            homeCategories = viewState.homeCategories,
-            selectedHomeCategory = viewState.selectedHomeCategory,
-            onCategorySelected = viewModel::onHomeCategorySelected,
-           // navigateToPlayer = navigateToPlayer,
-            modifier = Modifier.fillMaxSize()
-        )
-    }
-}
 
+            // initial tab :
+            var HomeCategory by remember {
+                mutableIntStateOf(0)
+            }
+
+            HomeContent(
+                homeCategories = viewState.homeCategories,
+                selectedHomeCategory = viewState.selectedHomeCategory,
+                onCategorySelected = viewModel::onHomeCategorySelected,
+               // onClick = {  },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContent(
-    isRefreshing: Boolean,
     selectedHomeCategory: HomeCategory,
     homeCategories: List<HomeCategory>,
-    modifier: Modifier = Modifier,
     onCategorySelected: (HomeCategory) -> Unit,
-   // navigateToPlayer: (String) -> Unit //implement videoplayer
-
+    modifier: Modifier = Modifier,
+   // onClick: () -> Unit
 ) {
-
-
     Column(
         modifier = modifier.windowInsetsPadding(
             WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
         )
-          //  .background(Color.White)
+        //  .background(Color.White)
 
-    ){
-            val surfaceColor = Color.White
-           // val appBarColor = surfaceColor.copy(alpha = 0.87f)
-
-        if (isRefreshing) {
-            // TODO show a progress indicator or similar
-        }
+    ) {
+        val surfaceColor = Color.White
+        // val appBarColor = surfaceColor.copy(alpha = 0.87f)
 
         if (homeCategories.isNotEmpty()) {
 
-                HomeCategoryTabs(
-                    categories = homeCategories,
-                    selectedCategory = selectedHomeCategory,
-                    onCategorySelected = onCategorySelected,
-                    )
+            HomeCategoryTabs(
+                categories = homeCategories,
+                selectedCategory = selectedHomeCategory,
+                onCategorySelected = onCategorySelected,
+
+            )
         }
-
-        when (selectedHomeCategory) {
-            HomeCategory.Naranjos -> {
-
-                Text(text = "navigate to viewplayer and show video naranjos")
-            }
-
-            HomeCategory.Bananos -> {
-            /**   (
-                    navigateToPlayer = navigateToPlayer,
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                )*/
-                Text(text = "navigate to viewplayer and show video bananos" )
-            }
-
-            HomeCategory.Roble -> {    }
-        }
-        }
-
-
+    }
 }
 
 @Composable
@@ -124,62 +107,103 @@ private fun HomeCategoryTabs(
     categories: List<HomeCategory>,
     selectedCategory: HomeCategory,
     onCategorySelected: (HomeCategory) -> Unit,
+
+
     modifier: Modifier = Modifier
 ) {
     modifier.background(Color.White)
-    val selectedIndex = categories.indexOfFirst { it == selectedCategory }
+    val selectedIndex = //categories.indexOf(HomeCategory.valueOf(selectedCategory.toString()))
+    categories.indexOfFirst { it == selectedCategory }
     val indicator = @Composable { tabPositions: List<TabPosition> ->
         HomeCategoryTabIndicator(
             Modifier.tabIndicatorOffset(tabPositions[selectedIndex])
         )
     }
-Column(modifier= Modifier
-    .fillMaxHeight()
-    .background(Color.White)
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(Color.White)
 
 
-
-) {
-    TabRow(
-        selectedTabIndex = selectedIndex,
-        indicator = indicator,
-
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(top = 15.dp, bottom = 1.dp)
-
-        ,
-
-           //.height(30.dp),
-
-        containerColor = Color.White//Color.White
     ) {
-        categories.forEachIndexed { index, category ->
-            Tab(
-                selected = index == selectedIndex,
-                onClick = { onCategorySelected(category) },
-                text = {
-                    Text(
-                        text = when (category) {
-                            HomeCategory.Bananos -> stringResource(R.string.bananos)
-                            HomeCategory.Naranjos -> stringResource(R.string.naranjos)
-                            HomeCategory.Roble -> stringResource(id = R.string.roble)
-                        },
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = if (index==selectedIndex) Color.Black else Color.DarkGray,
-                        fontWeight = if (index==selectedIndex ) FontWeight.Bold else FontWeight.Normal,//if(index ==selectedIndex) Color.DarkGray else Color.LightGray,
-                    )
-                },
-                unselectedContentColor = Color.Gray,
-                selectedContentColor = Color.Black
+        TabRow(
+            selectedTabIndex = selectedIndex,
+            indicator = indicator,
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(top = 15.dp, bottom = 1.dp),
 
+            containerColor = Color.White
+        ) {
+            categories.forEachIndexed { index, category ->
+                Tab(
+                    selected = index == selectedIndex,
+                    onClick = { onCategorySelected(category) },
+                    text = {
+                        Text(
+                            text = when (category) {
+                                HomeCategory.Bananos -> stringResource(R.string.bananos)
+                                HomeCategory.Naranjos -> stringResource(R.string.naranjos)
+                                HomeCategory.Roble -> stringResource( R.string.roble)
+                            },
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = if (index == selectedIndex) Color.Black else Color.DarkGray,
+                            fontWeight = if (index == selectedIndex) FontWeight.Bold else FontWeight.Normal,//if(index ==selectedIndex) Color.DarkGray else Color.LightGray,
+                        )
+                    },
+                    icon = {
+                        when (category) {
+                            HomeCategory.Bananos -> Icon(
+                                imageVector = Icons.Outlined.Cabin,
+                                contentDescription = null
+                            )
+
+                            HomeCategory.Naranjos -> Icon(
+                                imageVector = Icons.Outlined.Cabin,
+                                contentDescription = null
+                            )
+
+                            HomeCategory.Roble -> Icon(
+                                imageVector = Icons.Outlined.Cabin,
+                                contentDescription = null
+                            )
+
+                        }
+                    },
+                    unselectedContentColor = Color.Gray,
+                    selectedContentColor = Color.Black
+                )
+            }
+        }
+
+if (selectedCategory==HomeCategory.Bananos){
+
+        Bananos(onClick = {})
+
+
+        //  Log.d("selectedCategory", HomeViewModel.selectedHomeCategory)
+        Log.d("selected index", selectedIndex.toString())
+        Log.d("indicator", indicator.toString())
+        Log.d("selectedCategory", selectedCategory.name)
+
+    }
+        if (selectedCategory==HomeCategory.Naranjos){
+            Naranjos(
+                onClick = {}
             )
         }
-    }
+        
+        if (selectedCategory==HomeCategory.Roble){
+            Roble(
+                onClick = {}
+            )
+        }
 }
-    Log.d(ContentValues.TAG, selectedCategory.name)
+
+
 }
+
 
 
 @Composable

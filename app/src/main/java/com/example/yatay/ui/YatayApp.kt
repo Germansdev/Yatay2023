@@ -2,10 +2,11 @@ package com.example.yatay.ui
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
@@ -26,13 +27,12 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.yatay.navigation.BottomBarScreen
+import com.example.yatay.navigation.BottomBarScreen.Pantalla2
 import com.example.yatay.navigation.HomeNavGraph
 import com.example.yatay.navigation.Icon
 import com.example.yatay.presentation.profile.MiniProfile
@@ -71,15 +72,20 @@ fun YatayApp(
     appState: YatayAppState,
     modifier: Modifier = Modifier
 ) {
-//YatayBackground{
-   // modifier.background(Color.White)
 
     Scaffold(
-        modifier = Modifier,
+        modifier = Modifier
+        //    .nestedScroll(connection = scrollBehavior.nestedScrollConnection)
+        ,
+
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         containerColor = Color.White,
-        contentColor = Color.Transparent,
+        contentColor = Color.Gray,
+
         bottomBar = {
+
+            //my bottomBar actual bottombar:
+
             BottomBar(
                 destinations = appState.bottomBarScreens,
                 onNavigateToDestination = appState::navigateToBottomBarScreen,
@@ -91,7 +97,6 @@ fun YatayApp(
 
         Row(
             Modifier
-                //.background(Color.White)
                 .fillMaxSize()
                 .consumeWindowInsets(padding)
                 .windowInsetsPadding(
@@ -99,121 +104,174 @@ fun YatayApp(
                         WindowInsetsSides.Horizontal,
                     ),
                 ),
-
-            ) {
-
+        ) {
 
             if (appState.shouldShowNavRail) {
                 YatayNavRail(
                     destinations = appState.bottomBarScreens,
                     onNavigateToDestination = appState::navigateToBottomBarScreen,
                     currentDestination = appState.currentDestination,
-
                     modifier = Modifier
                         .safeDrawingPadding()
                 )
             }
             /** appState.navController.navigateToSearch() */
-            Column(Modifier.fillMaxWidth()
-               // .background(Color.White)
+            Column(
+                Modifier.fillMaxWidth()
             ) {
-//Row(modifier= Modifier.background(Color.White)) {
-Row (modifier = Modifier.fillMaxWidth()
 
-) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier.fillMaxWidth().padding(end= 24.dp)
+
+                ) {
+                    val currentDestination: NavDestination? = null ?: appState.currentDestination
+                    val destination = appState.currentTopLevelDestination
+                    if (destination != null) {
+
+                        if (currentDestination.isTopLevelDestinationInHierarchy(Pantalla2)) {
+                            /**
 
 
+                             */
 
-                val destination = appState.currentTopLevelDestination
-                if (destination != null) {
-                    /** appState.navController.navigateToSearch() */
-                   /** appState.navController.navigateToSearch() */
-                    ElevatedCard (
-                        shape = CircleShape,//RoundedCornerShape(25.dp),
+                        } else {
 
-                        elevation = CardDefaults.cardElevation(15.dp
-                            /**    defaultElevation= 5.dp,
-                            pressedElevation= 1.dp,
-                        focusedElevation= 10.dp,
-                     hoveredElevation= 10.dp,
-                    draggedElevation = 10.dp,
-                    disabledElevation = 3.dp*/
-                        /**    defaultElevation= 5.dp,
-                            pressedElevation= 1.dp,
-                        focusedElevation= 10.dp,
-                     hoveredElevation= 10.dp,
-                    draggedElevation = 10.dp,
-                    disabledElevation = 3.dp*/
-                        ),
-                        colors= CardDefaults.cardColors(
-                            containerColor=Color.White,
-                        contentColor= Color.White,
-                    disabledContainerColor= Color.LightGray,
-                    disabledContentColor= Color.LightGray
-                        ),
-                        modifier = Modifier
-                            // .fillMaxWidth()
-                            // .fillMaxHeight()
-                            .size(width = 320.dp, height = 70.dp)
-                            .padding(top = 6.dp, bottom = 6.dp, start = 24.dp, end = 4.dp),
-                           // .clip(RoundedCornerShape(25.dp))
-                    ){
+                            /** appState.navController.navigateToSearch() */
+                            /** appState.navController.navigateToSearch() */
+                            ElevatedCard(
+                                shape = CircleShape,
+                                elevation = CardDefaults.cardElevation(15.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.White,
+                                    contentColor = Color.White,
+                                    disabledContainerColor = Color.LightGray,
+                                    disabledContentColor = Color.LightGray
+                                ),
+                                modifier = Modifier
+                                    .size(
+                                        width = 220.dp
+                                        /**320.dp*/
+                                        , height = 70.dp
+                                    )
+                                    .padding(top = 6.dp, bottom = 6.dp, start = 24.dp, end = 4.dp),
+                            ) {
 
-                    CustomTopBar(
-                        titleRes = destination.titleTextId,
-                        navigationIcon = Icons.Outlined.Search,
-                        navigationIconContentDescription = null,
-                        actionIcon = Icons.Outlined.Settings,
-                        actionIconContentDescription = null,
-                        colors = TopAppBarDefaults
-                            .centerAlignedTopAppBarColors(
-                                // titleContentColor = GamesNavigationDefaults.navigationSelectedItemColor(),
-                                containerColor = Color.White,
-                            ),
-                        onActionClick = { },
-                        onNavigationClick = {/** appState.navController.navigateToSearch() */},
-                    )
+
+                                CustomTopBar(
+                                    titleRes = destination.titleTextId,
+                                    navigationIcon = Icons.Outlined.Search,
+                                    currentDestination = NavDestination(Pantalla2.route),
+                                    navigationIconContentDescription = null,
+                                    //actionIcon = Icons.Outlined.Settings,
+                                    actionIconContentDescription = null,
+                                    colors = TopAppBarDefaults
+                                        .centerAlignedTopAppBarColors(
+                                            containerColor = Color.White,
+                                        ),
+                                    // onActionClick = { },
+                                    onNavigationClick = { /** appState.navController.navigateToSearch() */ },
+                                )
+
+                            }
+                             Spacer(modifier = Modifier.size(42.dp))
+                         /**   ElevatedCard(
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.White,
+                                    contentColor = Color.DarkGray
+                                ),
+                                shape = CircleShape,
+                                modifier = Modifier
+                                    .background(Color.White)
+                                    .align(Alignment.CenterVertically)
+                                   // .align(Alignment.Center)
+                                    .wrapContentSize()
+                                    .size(48.dp)
+                                    //.padding(all = 4.dp)
+                                    .clickable { }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Settings,
+                                    contentDescription = null,
+                                    Modifier.size(width = 38.dp, height = 38.dp)
+
+
+                                )
+                            }*/
+                    /**            Button(
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.White,
+                                        contentColor = Color.DarkGray
+                                    ),
+                                    shape = CircleShape,
+                                    border = BorderStroke(2.dp, Color.LightGray),
+                                    modifier = Modifier
+                                        .align(Alignment.CenterVertically)
+                                        //.size(width = 48.dp, height = 48.dp)
+                                        .wrapContentSize(),
+                                    onClick = {  }
+                                ) {
+                                    Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
+                                 //   Spacer(modifier = Modifier.size(8.dp))
+                                   // Text(text = "Reserve")
+                                }
+
+                                Button(
+                                    onClick = { /*TODO*/ },
+                                    shape = CircleShape,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.Black,
+                                        contentColor = Color.White
+                                    ),
+                                    modifier = Modifier.size(48.dp)
+
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Settings,
+                                        contentDescription = null,
+                                        tint= Color.White
+                                    )
+
+
+                                }*/
+                        //    }
+
+                            Spacer(modifier = Modifier.size(12.dp))
+
+                            val applicationContext: Context = LocalContext.current
+                            val googleAuthUiClient by lazy {
+                                GoogleAuthUiClient(
+                                    context = applicationContext,
+                                    oneTapClient = Identity.getSignInClient(applicationContext)
+                                )
+                            }
+                            Card(
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.Transparent,
+                                    contentColor = Color.DarkGray
+                                ),
+                                shape = CircleShape,
+                                modifier = Modifier
+                                    .background(Color.White)
+                                    .align(Alignment.CenterVertically)
+                                    .wrapContentSize()
+                                    .size(48.dp)
+                                    .clickable { }
+
+                            ) {
+
+                                MiniProfile(
+                                    googleAuthUiClient.getSignedInUser(),
+                                    onClick = {},
+                                    Modifier
+                                        .size(width = 48.dp, height = 48.dp)
+                                        .padding(8.dp)
+                                        .clip(CircleShape)
+                                )
+                            }
+                        }
                     }
-
-                    }
-    Spacer(modifier = Modifier.size(12.dp))
-   /**  remember{
-        val  googleAuthUiClient: GoogleAuthUiClient,
-    }*/
-
-
-        //= UserData(userId = userData.userId, username = ,profilePictureUrl = userData.profilePictureUrl)
-    val applicationContext: Context = LocalContext.current
-   val googleAuthUiClient by lazy {
-       GoogleAuthUiClient(
-           context = applicationContext,
-           oneTapClient = Identity.getSignInClient(applicationContext)
-       )
-   }
-Card (
-    colors = CardDefaults.cardColors(containerColor = Color.Transparent, contentColor = Color.DarkGray),
-    shape = CircleShape,
-    modifier = Modifier
-        .background(Color.White)
-        .align(Alignment.CenterVertically)
-        //.align(Alignment.CenterHorizontally)
-        .wrapContentSize()
-        //.padding(4.dp)
-        .size(48.dp)
-        .clickable { }
-
-){
-
-    MiniProfile(
-
-        googleAuthUiClient.getSignedInUser(),
-        onClick = {},
-        Modifier
-            .size(width = 48.dp, height = 48.dp)
-            .padding(8.dp)
-            .clip(CircleShape)
-    )
-}
                 }
                 if (appState.isOnline) {
                     val navController = appState.navController
@@ -222,13 +280,15 @@ Card (
 
                 } else {
                     Text(
-                        color =Color.Gray,
-                        text = "hey connect to internet")
+                        color = Color.Gray,
+                        text = "hey connect to internet"
+                    )
                 }
             }
-            }
         }
+    }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -236,48 +296,63 @@ fun CustomTopBar(
     //with CenterAlignedTopAppBar:
     modifier: Modifier = Modifier,
     @StringRes titleRes: Int,
+    //destinations: List<BottomBarScreen>,
+    currentDestination: NavDestination?,
 
     navigationIcon: ImageVector?,
     navigationIconContentDescription: String?,
-    actionIcon: ImageVector,
+//    actionIcon: ImageVector,
     actionIconContentDescription: String?,
     colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
     onNavigationClick: () -> Unit = {},
-    onActionClick: () -> Unit = {},
+    //  onActionClick: () -> Unit = {},
 
-    ) {
-    //With CenterAlignedTopAppBar:
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = stringResource(id = titleRes),
-                fontSize = 16.sp,
-            )
-        },
-        navigationIcon = {
+) {
 
-            IconButton(onClick = onNavigationClick) {
-                if (navigationIcon != null) {
-                    Icon(
-                        imageVector = navigationIcon,
-                        contentDescription = navigationIconContentDescription,
-                        tint = MaterialTheme.colorScheme.onSurface,
-                    )
-                }
-            }
-        },
-        actions = {
-            IconButton(onClick = onActionClick) {
-                Icon(
-                    imageVector = actionIcon,
-                    contentDescription = actionIconContentDescription,
-                    tint = MaterialTheme.colorScheme.onSurface,
+    // val currentDestination: NavDestination? = null?: NavDestination(BottomBarScreen.Pantalla1.route)
+    // val destinations: List<BottomBarScreen>
+
+    if (currentDestination.isTopLevelDestinationInHierarchy(Pantalla2)) {
+        /**
+
+
+         */
+
+    } else {
+
+        //With CenterAlignedTopAppBar:
+        CenterAlignedTopAppBar(
+            title = {
+                Text(
+                    text = stringResource(id = titleRes),
+                    fontSize = 16.sp,
                 )
+            },
+            navigationIcon = {
+
+                IconButton(onClick = onNavigationClick) {
+                    if (navigationIcon != null) {
+                        Icon(
+                            imageVector = navigationIcon,
+                            contentDescription = navigationIconContentDescription,
+                            tint = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                }
+            },
+            /**    actions = {
+            IconButton(onClick = onActionClick) {
+            Icon(
+            imageVector = actionIcon,
+            contentDescription = actionIconContentDescription,
+            tint = MaterialTheme.colorScheme.onSurface,
+            )
             }
-        },
-        colors = colors,
-        modifier = modifier,
-    )
+            },*/
+            colors = colors,
+            modifier = modifier,
+        )
+    }
 }
 
 @Composable
@@ -286,7 +361,8 @@ fun YatayNavRail(
     onNavigateToDestination: (BottomBarScreen) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier
-) {   }
+) {
+}
 
 
 fun NavDestination?.isTopLevelDestinationInHierarchy(destination: BottomBarScreen) =
@@ -297,62 +373,103 @@ fun NavDestination?.isTopLevelDestinationInHierarchy(destination: BottomBarScree
 @Composable
 fun BottomBar(
     destinations: List<BottomBarScreen>,
-    onNavigateToDestination : (BottomBarScreen) -> Unit,
+    onNavigateToDestination: (BottomBarScreen) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier
-    ) {
-  Divider(
-      color= Color.Gray,
-  )
-    NavigationBar(
-        containerColor = Color.Transparent,
-        modifier = modifier.background(Color.Transparent)
-    ) {
+) {
+    modifier
+        .background(Color.Transparent)
 
-        destinations.forEach { screen ->
-            NavigationBarItem(
-                selected = currentDestination.isTopLevelDestinationInHierarchy(screen),
-                onClick = { onNavigateToDestination(screen) },
-                colors = colors(
-                    selectedIconColor =  Color.Black,
-                    selectedTextColor =  Color.Black,
-                    indicatorColor = Color.White ,
-                    unselectedTextColor = Color.Gray,
-                    unselectedIconColor = Color.Gray)
-                ,
-                icon = {
-                    val icon: Icon =
-                        if (currentDestination.isTopLevelDestinationInHierarchy(screen)) {
-                            screen.selectedIcon
-                        } else {
-                            screen.unselectedIcon
+
+    if (currentDestination.isTopLevelDestinationInHierarchy(Pantalla2)) {
+        /**
+
+
+         */
+
+    } else {
+        HorizontalDivider(
+            modifier
+                .fillMaxWidth()
+                .border(BorderStroke(width = 1.dp, Color.Gray)),
+            thickness = 1.dp,
+            color = Color.Gray
+        )
+
+        NavigationBar(
+
+            containerColor = Color.Transparent,// MaterialTheme.colorScheme.surface,//
+            contentColor = Color.Gray,
+            modifier = modifier.background(Color.Transparent)
+
+        ) {
+
+            destinations.forEach { screen ->
+                NavigationBarItem(
+                    selected = currentDestination.isTopLevelDestinationInHierarchy(screen),
+                    onClick = { onNavigateToDestination(screen) },
+                    colors = colors(
+                        selectedIconColor = Color.Black,
+                        selectedTextColor = Color.Black,
+                        indicatorColor = Color.White,
+                        unselectedTextColor = Color.Gray,
+                        unselectedIconColor = Color.Gray
+                    ),
+                    icon = {
+                        val icon: Icon =
+                            if (currentDestination.isTopLevelDestinationInHierarchy(screen)) {
+                                screen.selectedIcon
+                            } else {
+                                screen.unselectedIcon
+                            }
+                        when (icon) {
+                            is Icon.ImageVectorIcon -> Icon(
+                                imageVector = icon.imageVector,
+                                contentDescription = null,
+                            )
+
+                            is Icon.DrawableResourceIcon -> Icon(
+                                painter = painterResource(id = icon.id),
+                                contentDescription = null,
+                            )
+
+                            else -> {}
                         }
-                    when (icon) {
-                        is Icon.ImageVectorIcon -> Icon(
-                            imageVector = icon.imageVector,
-                            contentDescription = null,
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(id = screen.titleTextId),
+                            fontWeight = if (currentDestination.isTopLevelDestinationInHierarchy(
+                                    screen
+                                )
+                            ) (FontWeight.Bold) else (FontWeight.Normal),
+                            fontSize = 12.sp,
+                            softWrap = false,
+                            color = if (currentDestination.isTopLevelDestinationInHierarchy(screen)) Color.Black else Color.Gray
                         )
-
-                        is Icon.DrawableResourceIcon -> Icon(
-                            painter = painterResource(id = icon.id),
-                            contentDescription = null,
-                        )
-                    }
-                },
-                label = {
-                    Text(
-                        text = stringResource(id = screen.titleTextId),
-                        fontWeight = if (currentDestination.isTopLevelDestinationInHierarchy(screen)) (FontWeight.Bold ) else (FontWeight.Normal) ,
-                        fontSize = 12.sp,
-                        softWrap = false,
-                        color = if (currentDestination.isTopLevelDestinationInHierarchy(screen)) Color.Black else  Color.Gray
-                    )
-
-                },
-
-                modifier = Modifier.sizeIn(8.dp, 10.dp),
-            )
+                    },
+                    modifier = Modifier.sizeIn(8.dp, 10.dp),
+                )
+            }
         }
+
     }
+
 }
 
+/**with this bottomBar can scrollable and hide when use lazzy Column:
+@ExperimentalMaterial3Api
+@Composable
+fun BottomAppBar(
+actions: @Composable RowScope.() -> Unit,
+modifier: Modifier = Modifier,
+floatingActionButton: (@Composable () -> Unit)? = null,
+containerColor: Color = BottomAppBarDefaults.containerColor,
+contentColor: Color = contentColorFor(containerColor),
+tonalElevation: Dp = BottomAppBarDefaults.ContainerElevation,
+contentPadding: PaddingValues = BottomAppBarDefaults.ContentPadding,
+windowInsets: WindowInsets = BottomAppBarDefaults.windowInsets,
+scrollBehavior: BottomAppBarScrollBehavior? = null
+): Unit {
+
+}*/

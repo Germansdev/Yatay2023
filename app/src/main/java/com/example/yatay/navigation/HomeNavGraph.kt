@@ -1,27 +1,27 @@
 package com.example.yatay.navigation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.yatay.maps.ScreenMap
 import com.example.yatay.ui.YatayAppState
+import com.example.yatay.ui.screens.Bananos
+import com.example.yatay.ui.screens.DatePickerScreenDestination
+import com.example.yatay.ui.screens.DateRangePicker
 import com.example.yatay.ui.screens.ScreenGallery
 import com.example.yatay.ui.screens.ScreenHome
+import com.example.yatay.ui.screens.ScreenMap
 import com.example.yatay.ui.screens.ScreenMessages
 import com.example.yatay.ui.screens.ScreenReserve
+import com.example.yatay.ui.screens.navigateToDateRangePicker
+
+
+sealed class DetailsScreen(val route: String) {
+    object Information : DetailsScreen(route = "INFORMATION")
+    object Overview : DetailsScreen(route = "OVERVIEW")
+    //  object MiniProfile : AuthScreen(route = "MINIPROFILE")
+}
 
 @Composable
 fun HomeNavGraph(
@@ -42,10 +42,12 @@ fun HomeNavGraph(
     ) {
 
         composable(route = BottomBarScreen.Pantalla1.route) {
-            ScreenHome()
+            ScreenHome( )
         }
         composable(route = BottomBarScreen.Pantalla2.route) {
-            ScreenMap()
+            ScreenMap(
+                onClick = { navController.navigate(BottomBarScreen.Pantalla1.route)}
+            )
         }
         composable(route = BottomBarScreen.Pantalla3.route) {
             ScreenReserve()
@@ -76,6 +78,13 @@ fun HomeNavGraph(
           //  }
 
 
+        }
+
+        composable(route=DatePickerScreenDestination.route){
+            Bananos( onClick = { navController.navigateToDateRangePicker() })
+        }
+        composable(route = DatePickerScreenDestination.route){
+            DateRangePicker()
         }
         //detailsNavGraph(navController = navController)
 
@@ -129,8 +138,4 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
     }
 }*/
 
-sealed class DetailsScreen(val route: String) {
-    object Information : DetailsScreen(route = "INFORMATION")
-    object Overview : DetailsScreen(route = "OVERVIEW")
-  //  object MiniProfile : AuthScreen(route = "MINIPROFILE")
-}
+

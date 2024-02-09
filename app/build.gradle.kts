@@ -55,6 +55,12 @@ android {
 
 dependencies {
 
+
+ //library datepicker
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:1.1.6")
+
+
 //accompanist:
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
@@ -62,6 +68,7 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation ("com.google.dagger:hilt-android:2.38.1")
     implementation("androidx.compose.ui:ui-unit-android:1.6.0")
+    implementation("androidx.compose.material3:material3-android:1.2.0-rc01")
     kapt ("com.google.dagger:hilt-compiler:2.38.1")
 
 //Navigation:
@@ -104,7 +111,7 @@ dependencies {
     //implementation ("com.google.android.material:material-icons:1.5.0")
 
     //material icons extended
-    implementation ("androidx.compose.material:material-icons-extended:1.4.3")
+    implementation ("androidx.compose.material:material-icons-extended:1.5.0")
     implementation ("androidx.core:core-ktx:1.10.1")
 
     testImplementation("junit:junit:4.13.2")

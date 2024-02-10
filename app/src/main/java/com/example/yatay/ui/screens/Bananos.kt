@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,11 +18,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -84,39 +80,26 @@ fun Bananos(
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.Bottom
         ) {
 
-
             Text(
                 text = "Bananos",
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(start = 16.dp),
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.titleLarge
             )
-            Spacer(modifier = Modifier.size(50.dp))
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier
-                    .wrapContentSize(),
-                onClick = { onClick()  }
-            ) {
-                Icon(imageVector = Icons.Filled.DateRange, contentDescription = null)
-                Spacer(modifier = Modifier.size(8.dp))
-                Text(text = "Reserve")
-            }
+
         }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 26.dp, end = 16.dp)
+                .padding(start = 16.dp, end = 16.dp)
         ) {
-            Spacer(modifier = Modifier.size(8.dp))
+           // Spacer(modifier = Modifier.size(8.dp))
             Row(
                 verticalAlignment = Alignment.Bottom
             ) {
@@ -146,7 +129,7 @@ fun Bananos(
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.wrapContentSize(),
                 verticalAlignment = Alignment.Bottom
             ) {
                 Text(
@@ -158,27 +141,25 @@ fun Bananos(
                     text = ": USD 30",
                     style = MaterialTheme.typography.bodyMedium,
                 )
-            }
-            Spacer(modifier = Modifier.size(8.dp))
-            Row (modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.Start
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.Bottom
+                    ) {
+                    Icon(
+                        imageVector = Icons.Default.FavoriteBorder,
+                        contentDescription = null,
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Transparent)
+                            .clip(CircleShape)
+                            .clickable { }
 
-            ){
-                Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = null,
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(20.dp)
-                        .background(Color.Transparent)
-                        .clip(CircleShape)
-                        .clickable { }
-                )
-                Spacer(modifier = Modifier.size(width = 80.dp, height = 20.dp))
-
-                    Text(text = "rate 5 ")
+                    )
+                    Text(text = "rate 5 ",modifier.padding(start = 28.dp))
                     Icon(imageVector = Icons.Filled.Star, contentDescription = null)
+                }
+
             }
         }
     }

@@ -1,27 +1,22 @@
 package com.example.yatay.navigation
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import com.example.yatay.ui.YatayAppState
-import com.example.yatay.ui.screens.Bananos
-import com.example.yatay.ui.screens.DatePickerScreenDestination
 import com.example.yatay.ui.screens.DateRangePicker
 import com.example.yatay.ui.screens.ScreenGallery
 import com.example.yatay.ui.screens.ScreenHome
 import com.example.yatay.ui.screens.ScreenMap
 import com.example.yatay.ui.screens.ScreenMessages
 import com.example.yatay.ui.screens.ScreenReserve
-import com.example.yatay.ui.screens.navigateToDateRangePicker
 
 
-sealed class DetailsScreen(val route: String) {
-    object Information : DetailsScreen(route = "INFORMATION")
-    object Overview : DetailsScreen(route = "OVERVIEW")
-    //  object MiniProfile : AuthScreen(route = "MINIPROFILE")
-}
 
 @Composable
 fun HomeNavGraph(
@@ -42,7 +37,9 @@ fun HomeNavGraph(
     ) {
 
         composable(route = BottomBarScreen.Pantalla1.route) {
-            ScreenHome( )
+            ScreenHome(
+                onClick = {navController.navigate(Graph.DETAILS)}
+            )
         }
         composable(route = BottomBarScreen.Pantalla2.route) {
             ScreenMap(
@@ -79,14 +76,20 @@ fun HomeNavGraph(
 
 
         }
-
-        composable(route=DatePickerScreenDestination.route){
+        /**
+         * OPTION 1 : with NavOption similar to Search or with Args (PENDING):
+         */
+       /** composable(route=DatePickerScreenDestination.route){
             Bananos( onClick = { navController.navigateToDateRangePicker() })
         }
         composable(route = DatePickerScreenDestination.route){
             DateRangePicker()
-        }
-        //detailsNavGraph(navController = navController)
+        }*/
+
+
+
+
+        detailsNavGraph(navController = navController)
 
 
     /**    composable(route = Graph.DETAILS) {
@@ -107,35 +110,35 @@ fun HomeNavGraph(
                 }
             )
         }*/
+
     }
 }
 
-/**
+
+@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
     navigation(
         route = Graph.DETAILS,
-        startDestination = DetailsScreen.MiniProfile.route
+        startDestination = DetailsScreen.dateRangePicker.route
     ) {
-        composable(route = DetailsScreen.MiniProfile.route){
-            val applicationContext: Context = LocalContext.current
-            val googleAuthUiClient by lazy {
-                GoogleAuthUiClient(
-                    context = applicationContext,
-                    oneTapClient = Identity.getSignInClient(applicationContext)
-                )
-            }
-            MiniProfile(
-                googleAuthUiClient.getSignedInUser(),
-                onClick = {
-
-                    navController.popBackStack()
-                   // navController.navigate(Graph.DETAILS)
-                    //navController.navigate(Graph.AUTHENTICATION)
-                }
-            )
-        }
+composable(route = DetailsScreen.dateRangePicker.route){
+    DateRangePicker(
+        onClick = {
+            //navController.popBackStack()
+            //navController.navigate(Graph.HOME)
+            navController.navigate(BottomBarScreen.Pantalla3.route)
+            },
+        onDismiss = {navController.popBackStack()}
+    )
+}
 
     }
-}*/
+}
 
 
+sealed class DetailsScreen(val route: String) {
+    object dateRangePicker: DetailsScreen(route = "DATEPICKER")
+    object Information : DetailsScreen(route = "INFORMATION")
+    object Overview : DetailsScreen(route = "OVERVIEW")
+    //  object MiniProfile : AuthScreen(route = "MINIPROFILE")
+}

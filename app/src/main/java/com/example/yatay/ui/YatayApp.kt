@@ -1,7 +1,6 @@
 package com.example.yatay.ui
 
 import android.content.Context
-import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -59,6 +58,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.yatay.navigation.BottomBarScreen
 import com.example.yatay.navigation.BottomBarScreen.Pantalla2
+import com.example.yatay.navigation.DetailsScreen
 import com.example.yatay.navigation.HomeNavGraph
 import com.example.yatay.navigation.Icon
 import com.example.yatay.presentation.profile.MiniProfile
@@ -83,8 +83,12 @@ fun YatayApp(
         contentColor = Color.Gray,
 
         bottomBar = {
-
+            val currentDestination: NavDestination? = null ?: appState.currentDestination
+            val destination = appState.currentTopLevelDestination
             //my bottomBar actual bottombar:
+            if (currentDestination.isTopLevelDestinationInHierarchy(Pantalla2)) {
+            } else if (destination==null){
+            } else {
 
             BottomBar(
                 destinations = appState.bottomBarScreens,
@@ -92,6 +96,7 @@ fun YatayApp(
                 currentDestination = appState.currentDestination,
                 modifier = Modifier.background(Color.Transparent),
             )
+            }
         }
     ) { padding ->
 
@@ -130,11 +135,10 @@ fun YatayApp(
                     val destination = appState.currentTopLevelDestination
                     if (destination != null) {
 
-                        if (currentDestination.isTopLevelDestinationInHierarchy(Pantalla2)) {
-                            /**
+                        if (currentDestination.isTopLevelDestinationInHierarchy(Pantalla2)  ) {
 
 
-                             */
+                        } else if (destination.route == DetailsScreen.dateRangePicker.route){
 
                         } else {
 
@@ -152,7 +156,6 @@ fun YatayApp(
                                 modifier = Modifier
                                     .size(
                                         width = 220.dp
-                                        /**320.dp*/
                                         , height = 70.dp
                                     )
                                     .padding(top = 6.dp, bottom = 6.dp, start = 24.dp, end = 4.dp),
@@ -160,7 +163,7 @@ fun YatayApp(
 
 
                                 CustomTopBar(
-                                    titleRes = destination.titleTextId,
+                                   // titleRes = destination.titleTextId,
                                     navigationIcon = Icons.Outlined.Search,
                                     currentDestination = NavDestination(Pantalla2.route),
                                     navigationIconContentDescription = null,
@@ -170,72 +173,13 @@ fun YatayApp(
                                         .centerAlignedTopAppBarColors(
                                             containerColor = Color.White,
                                         ),
-                                    // onActionClick = { },
+
                                     onNavigationClick = { /** appState.navController.navigateToSearch() */ },
                                 )
 
                             }
                              Spacer(modifier = Modifier.size(42.dp))
-                         /**   ElevatedCard(
-                                colors = CardDefaults.cardColors(
-                                    containerColor = Color.White,
-                                    contentColor = Color.DarkGray
-                                ),
-                                shape = CircleShape,
-                                modifier = Modifier
-                                    .background(Color.White)
-                                    .align(Alignment.CenterVertically)
-                                   // .align(Alignment.Center)
-                                    .wrapContentSize()
-                                    .size(48.dp)
-                                    //.padding(all = 4.dp)
-                                    .clickable { }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.Settings,
-                                    contentDescription = null,
-                                    Modifier.size(width = 38.dp, height = 38.dp)
 
-
-                                )
-                            }*/
-                    /**            Button(
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.White,
-                                        contentColor = Color.DarkGray
-                                    ),
-                                    shape = CircleShape,
-                                    border = BorderStroke(2.dp, Color.LightGray),
-                                    modifier = Modifier
-                                        .align(Alignment.CenterVertically)
-                                        //.size(width = 48.dp, height = 48.dp)
-                                        .wrapContentSize(),
-                                    onClick = {  }
-                                ) {
-                                    Icon(imageVector = Icons.Filled.Settings, contentDescription = null)
-                                 //   Spacer(modifier = Modifier.size(8.dp))
-                                   // Text(text = "Reserve")
-                                }
-
-                                Button(
-                                    onClick = { /*TODO*/ },
-                                    shape = CircleShape,
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.Black,
-                                        contentColor = Color.White
-                                    ),
-                                    modifier = Modifier.size(48.dp)
-
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Settings,
-                                        contentDescription = null,
-                                        tint= Color.White
-                                    )
-
-
-                                }*/
-                        //    }
 
                             Spacer(modifier = Modifier.size(12.dp))
 
@@ -295,7 +239,7 @@ fun YatayApp(
 fun CustomTopBar(
     //with CenterAlignedTopAppBar:
     modifier: Modifier = Modifier,
-    @StringRes titleRes: Int,
+   // @StringRes titleRes: Int,
     //destinations: List<BottomBarScreen>,
     currentDestination: NavDestination?,
 
@@ -323,10 +267,10 @@ fun CustomTopBar(
         //With CenterAlignedTopAppBar:
         CenterAlignedTopAppBar(
             title = {
-                Text(
+            /**    Text(
                     text = stringResource(id = titleRes),
                     fontSize = 16.sp,
-                )
+                )*/
             },
             navigationIcon = {
 

@@ -72,12 +72,7 @@ fun ScreenMap(
 
 
 }
-// }
 
-
-//   }
-
-//}
 
 @Composable
 fun GoogleMapView(
@@ -114,7 +109,7 @@ fun GoogleMapView(
 
         //marker with infoWindow:
         Marker(
-            snippet = "Atendido por su dueña\nDescanso\nHermosas vistas",
+            snippet = "Served by its owner\nRelax\nbeautiful views and landscapes",
             flat = true,
             visible = true,
             state = yatayPointState,

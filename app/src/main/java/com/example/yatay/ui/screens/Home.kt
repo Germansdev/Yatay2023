@@ -3,22 +3,23 @@ package com.example.yatay.ui.screens
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.outlined.Cabin
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -45,30 +47,64 @@ import com.example.yatay.model.HomeCategory
 fun ScreenHome(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    onClick: () -> Unit
 ) {
        val viewState by viewModel.state.collectAsStateWithLifecycle()
 
-
     Surface(
         Modifier
-            .fillMaxSize()
-            .background(Color.White)
-        //.background(Color.White)
+
     ) {
+
+        Column (
+            modifier = Modifier
+                .wrapContentSize()
+                .background(Color.White)
+
+        ) {
+
 
             // initial tab :
             var HomeCategory by remember {
                 mutableIntStateOf(0)
             }
+Column (modifier = Modifier
+    .size(620.dp)
+    .background(Color.Transparent)){
 
             HomeContent(
                 homeCategories = viewState.homeCategories,
                 selectedHomeCategory = viewState.selectedHomeCategory,
                 onCategorySelected = viewModel::onHomeCategorySelected,
-               // onClick = {  },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier,
+                onClick = onClick
             )
+
+}
+            Row (modifier = Modifier
+                .fillMaxSize()
+                .padding(end = 16.dp, )
+                ,
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.Top
+
+                ){
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier
+                        .wrapContentSize(),
+                    onClick = { onClick()  }
+                ) {
+                    Icon(imageVector = Icons.Filled.DateRange, contentDescription = null)
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(text = "Reserve")
+                }
+            }
         }
+    }
     }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -78,15 +114,18 @@ fun HomeContent(
     homeCategories: List<HomeCategory>,
     onCategorySelected: (HomeCategory) -> Unit,
     modifier: Modifier = Modifier,
-   // onClick: () -> Unit
+    onClick: () -> Unit
 ) {
-    Column(
-        modifier = modifier.windowInsetsPadding(
+/**    Column(
+        modifier = modifier
+            /**.windowInsetsPadding(
             WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
-        )
+        )*/
         //  .background(Color.White)
+            .background(Color.Red)
+            .wrapContentSize() //prueba
 
-    ) {
+    ) {*/
         val surfaceColor = Color.White
         // val appBarColor = surfaceColor.copy(alpha = 0.87f)
 
@@ -96,10 +135,13 @@ fun HomeContent(
                 categories = homeCategories,
                 selectedCategory = selectedHomeCategory,
                 onCategorySelected = onCategorySelected,
+                onClick = onClick
 
             )
         }
-    }
+
+
+//    }
 }
 
 @Composable
@@ -107,7 +149,7 @@ private fun HomeCategoryTabs(
     categories: List<HomeCategory>,
     selectedCategory: HomeCategory,
     onCategorySelected: (HomeCategory) -> Unit,
-
+    onClick: () -> Unit,
 
     modifier: Modifier = Modifier
 ) {
@@ -119,13 +161,13 @@ private fun HomeCategoryTabs(
             Modifier.tabIndicatorOffset(tabPositions[selectedIndex])
         )
     }
-    Column(
+/**    Column(
         modifier = Modifier
-            .fillMaxHeight()
-            .background(Color.White)
+            //.fillMaxHeight()
+            .background(Color.Green )//background(Color.White)
 
 
-    ) {
+    ) {*/
         TabRow(
             selectedTabIndex = selectedIndex,
             indicator = indicator,
@@ -199,7 +241,7 @@ if (selectedCategory==HomeCategory.Bananos){
                 onClick = {}
             )
         }
-}
+//  }
 
 
 }
